@@ -1,0 +1,21 @@
+# 应用启动端口
+server:
+  port: 8083
+
+# debug 细粒度日志打印
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+# 路由举例
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: after_route1
+          uri: http://locahost:8082
+          predicates:
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
