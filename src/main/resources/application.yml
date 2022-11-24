@@ -10,12 +10,23 @@ logging:
         cloud:
           gateway: trace
 
-# 路由举例
+# 过滤器，请求头
 spring:
   cloud:
     gateway:
       routes:
-        - id: after_route1
-          uri: http://locahost:8082
+        - id: add_request_header_route
+          uri: http://localhost:8082
           predicates:
-            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+            - Path=/api/name/**
+          filters:
+            - AddRequestHeader=clarity, clarity
+# 路由举例
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: after_route1
+#          uri: http://localhost:8082/api
+#          predicates:
+#            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
