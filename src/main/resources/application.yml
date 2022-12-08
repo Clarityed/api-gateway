@@ -10,17 +10,23 @@ logging:
         cloud:
           gateway: trace
 
-# 过滤器，请求头
+# spring cloud gateway
 spring:
   cloud:
     gateway:
       routes:
-        - id: add_request_header_route
-          uri: http://localhost:8082
+        - id: api_route
+          uri: http://localhost:8084
           predicates:
-            - Path=/api/name/**
-          filters:
-            - AddRequestHeader=clarity, clarity
+            - Path=/api/**
+
+#      routes:
+#        - id: add_request_header_route
+#          uri: http://localhost:8082
+#          predicates:
+#            - Path=/api/name/**
+#          filters:
+#            - AddRequestHeader=clarity, clarity
 # 路由举例
 #spring:
 #  cloud:
