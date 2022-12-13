@@ -93,7 +93,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         //  要从数据库中查询模拟接口是否存在（还可以校验请求参数，但是建议业务层里实现）
         //  又因为网关项目没有引入 Mybatis 相关的类库，如果方法比较复杂可以远程调用接口，查询接口例如：Dubbo
         // 6. 请求转发调用模拟接口。
-        Mono<Void> filter = chain.filter(exchange);
+        // Mono<Void> filter = chain.filter(exchange);
         log.info("响应结果：" + response.getStatusCode());
 
         return handleResponse(exchange, chain);
