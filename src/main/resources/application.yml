@@ -23,17 +23,13 @@ spring:
 # dubbo
 dubbo:
   application:
-    name: dubbo-springboot-demo-provider
+    name: dubbo-springboot-demo-consumer
   protocol:
     name: dubbo
     port: -1
   registry:
-    id: zk-registry
-    address: zookeeper://127.0.0.1:2181
-  config-center:
-    address: zookeeper://127.0.0.1:2181
-  metadata-report:
-    address: zookeeper://127.0.0.1:2181
+    id: nacos-registry
+    address: nacos://localhost:8848
 
 #      routes:
 #        - id: add_request_header_route
