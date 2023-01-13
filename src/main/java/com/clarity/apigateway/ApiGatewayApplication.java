@@ -27,6 +27,7 @@ public class ApiGatewayApplication {
         return demoService.sayHello(name);
     }
 
+    // 测试网关请求功能的代码段
 /*    @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
