@@ -6,6 +6,8 @@ import com.clarity.apibackend.publicinterface.service.InnerInterfaceInfoService;
 import com.clarity.apibackend.publicinterface.service.InnerUserInterfaceInfoService;
 import com.clarity.apibackend.publicinterface.service.InnerUserService;
 import com.clarity.apiclientsdk.utils.SignUtils;
+import com.clarity.apigateway.common.ErrorCode;
+import com.clarity.apigateway.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;
@@ -126,6 +128,15 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
         if (interfaceInfo == null) {
             return handleNoAuth(response);
+        }
+        // 下面调用接口的逻辑是，先调用接口，然后再进行判断接口 +1
+        // 我们现在要判断接口剩余调用次数为 0 时，应该拦截不让调用
+        boolean result = innerUserInterfaceInfoService.judgeInterfaceInfoLeftNum(interfaceInfo.getId(), invokeUser.getId());
+        if (!result) {
+            // todo 但是最后还是会抛出异常信息给前端，估计是异常处理类不够完善，有空去修改
+            // todo 这里出现打断点的时间都会导致远程调用超时
+            // todo 还要一些其他的小 bug 有空了去修改
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "剩余调用次数为 0");
         }
         // 6. 请求转发调用模拟接口。
         // Mono<Void> filter = chain.filter(exchange);
